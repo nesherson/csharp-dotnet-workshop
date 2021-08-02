@@ -5,27 +5,25 @@ namespace csharp_workshop
 {
     class Program
     {
-        static void Main(string[] args)
+         static void Main(string[] args)
         {
-            Console.WriteLine("Quantities:");
-    HumanizeQuantities();
-
-    Console.WriteLine("\nDate/Time Manipulation:");
-    HumanizeDates();
+            int result = Fibonacci(5);
+            Console.WriteLine(result);
+            //Console.ReadKey(true);
         }
-        static void HumanizeQuantities()
+        static int Fibonacci(int n)
         {
-            Console.WriteLine("case".ToQuantity(0));
-            Console.WriteLine("case".ToQuantity(1));
-            Console.WriteLine("case".ToQuantity(5));
-        }
+            int n1 = 0;
+            int n2 = 1;
+            int sum = 0;
 
-        static void HumanizeDates()
-        {
-            Console.WriteLine(DateTime.UtcNow.AddHours(-24).Humanize());
-            Console.WriteLine(DateTime.UtcNow.AddHours(-2).Humanize());
-            Console.WriteLine(TimeSpan.FromDays(1).Humanize());
-            Console.WriteLine(TimeSpan.FromDays(16).Humanize());
+            for (int i = 2; i <= n; i++)
+            {
+                sum = n1 + n2;
+                n1 = n2;
+                n2 = sum;
+            }
+            return n == 0 ? n1 : n2;
         }
     }
 }
