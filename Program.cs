@@ -1,29 +1,38 @@
 ﻿using System;
-using Humanizer;
+using System.IO;
+using System.Collections.Generic;
 
 namespace csharp_workshop
 {
     class Program
     {
-         static void Main(string[] args)
+        static void Main(string[] args)
         {
-            int result = Fibonacci(5);
-            Console.WriteLine(result);
-            //Console.ReadKey(true);
-        }
-        static int Fibonacci(int n)
-        {
-            int n1 = 0;
-            int n2 = 1;
-            int sum = 0;
 
-            for (int i = 2; i <= n; i++)
+            var salesFiles = FindFiles("stores");
+
+            foreach(var file in salesFiles) 
             {
-                sum = n1 + n2;
-                n1 = n2;
-                n2 = sum;
+                Console.WriteLine(file);
             }
-            return n == 0 ? n1 : n2;
         }
+
+        static IEnumerable<string> FindFiles(string folderName)
+        {
+
+            List<string> salesFiles = new List<string>();
+
+            var foundFiles = Directory.EnumerateFiles(folderName, "*", SearchOption.AllDirectories);
+
+            foreach (var file in foundFiles)
+            {
+                if (file.EndsWith("sales.json")) {
+                    salesFiles.Add(file);
+                }
+            }
+
+            return salesFiles;
+        }
+
     }
 }
