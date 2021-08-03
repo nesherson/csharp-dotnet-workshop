@@ -1,38 +1,26 @@
-﻿using System;
-using System.IO;
+using System;
 using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+using Microsoft.AspNetCore.Hosting;
+using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.Hosting;
+using Microsoft.Extensions.Logging;
 
 namespace csharp_workshop
 {
-    class Program
+    public class Program
     {
-        static void Main(string[] args)
+        public static void Main(string[] args)
         {
-
-            var salesFiles = FindFiles("stores");
-
-            foreach(var file in salesFiles) 
-            {
-                Console.WriteLine(file);
-            }
+            CreateHostBuilder(args).Build().Run();
         }
 
-        static IEnumerable<string> FindFiles(string folderName)
-        {
-
-            List<string> salesFiles = new List<string>();
-
-            var foundFiles = Directory.EnumerateFiles(folderName, "*", SearchOption.AllDirectories);
-
-            foreach (var file in foundFiles)
-            {
-                if (file.EndsWith("sales.json")) {
-                    salesFiles.Add(file);
-                }
-            }
-
-            return salesFiles;
-        }
-
+        public static IHostBuilder CreateHostBuilder(string[] args) =>
+            Host.CreateDefaultBuilder(args)
+                .ConfigureWebHostDefaults(webBuilder =>
+                {
+                    webBuilder.UseStartup<Startup>();
+                });
     }
 }
