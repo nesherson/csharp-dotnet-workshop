@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Text;
 
 namespace csharp_workshop {
 
@@ -43,6 +44,17 @@ namespace csharp_workshop {
 
             var withdrawal = new Transaction(-amount, date, note);
             allTransactions.Add(withdrawal);
+        }
+
+        public string GetAccountHistory() {
+            var report = new StringBuilder();
+            report.AppendLine("Date\t\tAmount\tNote");
+            foreach (var item in allTransactions)
+            {
+                report.AppendLine($"{item.Date.ToShortDateString()}\t{item.Amount}\t{item.Notes}");
+            }
+
+            return report.ToString();
         }
     }
 }
