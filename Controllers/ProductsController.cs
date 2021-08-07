@@ -7,23 +7,35 @@ using Microsoft.AspNetCore.Mvc;
 using ContosoCrafts.Services;
 using ContosoCrafts.Models;
 
-namespace ContosoCrafts.Controllers {
+namespace ContosoCrafts.Controllers
+{
 
     [ApiController]
     [Route("[controller]")]
-    public class ProductsController : ControllerBase {
+    public class ProductsController : ControllerBase
+    {
 
-        public ProductsController(JsonFileProductService productService) {
+        public ProductsController(JsonFileProductService productService)
+        {
             ProductService = productService;
         }
 
         public JsonFileProductService ProductService { get; }
 
         [HttpGet]
-        public IEnumerable<Product> Get() {
+        public IEnumerable<Product> Get()
+        {
             return ProductService.GetProducts();
         }
-    
+
+        [Route("Rate")]
+        [HttpGet]
+        public ActionResult Get([FromQuery] string productId, [FromQuery] int rating)
+        {
+            ProductService.AddRating(productId, rating);
+            return Ok();
+        }
+
     }
 
 }
