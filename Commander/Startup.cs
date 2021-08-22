@@ -10,6 +10,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore;
 
 using Commander.Data;
 
@@ -23,15 +24,16 @@ namespace Commander
         }
 
         public IConfiguration Configuration { get; }
+        private string _dbKey = null;
 
-        // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            _dbKey = Configuration["ConnectionString"];
+            services.AddDbContext<CommanderContext>(options => options.UseNpgsql(_dbKey));
             services.AddControllers();
-            services.AddScoped<ICommanderRepo, MockCommanderRepo>();
+            services.AddScoped<ICommanderRepo, SqlCommanderRepo>();
         }
 
-        // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
             if (env.IsDevelopment())

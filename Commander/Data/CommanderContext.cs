@@ -12,31 +12,17 @@ namespace Commander.Data
 {
     public partial class CommanderContext : DbContext
     {
-        private string _connectionString = null;
-
-        public CommanderContext(IConfiguration configuration)
-        {
-            Configuration = configuration;
-
-        }
-
         public CommanderContext(DbContextOptions<CommanderContext> options)
             : base(options)
         {
         }
-
-        public IConfiguration Configuration { get; }
-
-
         public virtual DbSet<Command> Commands { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            _connectionString = Configuration["Commander:ConnectionString"];
-
             if (!optionsBuilder.IsConfigured)
             {
-                optionsBuilder.UseNpgsql(_connectionString);
+                optionsBuilder.UseNpgsql();
             }
         }
 
