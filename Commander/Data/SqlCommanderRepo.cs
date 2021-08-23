@@ -38,9 +38,16 @@ namespace Commander.Data
             _context.Commands.Add(cmd);
         }
 
+        public void UpdateCommand(Command cmd)
+        {
+            // Nada
+        }
+
         public bool SaveChanges()
         {
             return (_context.SaveChanges() >= 0);
         }
+
+        
     }
 }
