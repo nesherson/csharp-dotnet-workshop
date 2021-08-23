@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
+using AutoMapper;
 
 using Commander.Data;
 
@@ -31,6 +32,7 @@ namespace Commander
             _dbKey = Configuration["ConnectionString"];
             services.AddDbContext<CommanderContext>(options => options.UseNpgsql(_dbKey));
             services.AddControllers();
+            services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
             services.AddScoped<ICommanderRepo, SqlCommanderRepo>();
         }
 
